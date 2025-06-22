@@ -1,1 +1,1 @@
-A FRC robot code structure developed my team 10523
+A FRC robot code structure
