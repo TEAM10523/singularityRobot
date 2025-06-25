@@ -1,5 +1,7 @@
 package frc.lib.structure.motors;
 
-public class MotorIO {
+import frc.lib.structure.*;
+
+public interface MotorIO extends sensor<MotorInputs>, actuator<MotorRequest>{
     
 }

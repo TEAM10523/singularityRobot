@@ -1,6 +1,6 @@
 package frc.lib.structure;
 
-public interface device<Tconfig> {
+public interface device<Tconfig extends ConfigIO> {
 
     default void setConfig(Tconfig config){}
 
