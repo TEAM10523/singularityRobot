@@ -7,6 +7,7 @@ public class MotorConfig implements ConfigIO {
     public String name;
     public int ID;
     public String canbus;
+    public double updateFrequency;
     
     // PIDs and FFs
     public double kP = 0;
@@ -28,6 +29,7 @@ public class MotorConfig implements ConfigIO {
     public boolean reversed = false;
     public boolean isBreak = false;
     public boolean continuous = false;
+    public boolean isInnerSyncronized=true;
 
     public double stallTorque = 0;
     public double freeVel = 0;
