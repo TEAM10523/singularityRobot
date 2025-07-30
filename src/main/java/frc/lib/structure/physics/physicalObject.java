@@ -2,10 +2,10 @@ package frc.lib.structure.physics;
 
 import org.ejml.simple.SimpleMatrix;
 
-import frc.lib.structure.ConfigIO;
+import frc.lib.structure.configBase;
 import frc.lib.structure.device;
 
-public  interface physicalObject<TConfig extends ConfigIO> extends device<TConfig>{
+public  interface physicalObject<TConfig extends configBase> extends device<TConfig>{
 
     default physicalProperties getPhysicalProperties(){return null;}
 
