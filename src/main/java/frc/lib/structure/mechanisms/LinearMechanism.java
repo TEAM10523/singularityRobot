@@ -1,9 +1,12 @@
 package frc.lib.structure.mechanisms;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.ejml.simple.SimpleMatrix;
 import frc.lib.structure.configBase;
 import frc.lib.structure.inputBase;
 import frc.lib.structure.requestBase;
+import frc.lib.structure.motors.MotorConfig;
 import frc.lib.structure.motors.MotorInputs;
 import frc.lib.structure.physics.physicalProperties;
 
@@ -122,11 +125,26 @@ public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBa
 
     @Override
     protected void updateStateFromMotorInputs() {
-        // Update linear mechanism state from motor inputs
-        MotorInputs currentInputs = motorIO.get();
-        setCurrentPosition(currentInputs.position);
-        setVelocity(currentInputs.velocity);
-        setAcceleration(currentInputs.acceleration);
+        // Update linear mechanism state from motor inputs (average of all motors)
+        if (getMotorCount() > 0) {
+            double avgPosition = 0.0;
+            double avgVelocity = 0.0;
+            double avgAcceleration = 0.0;
+
+            for (MotorInputs inputs : getMotorInputs()) {
+                avgPosition += inputs.position;
+                avgVelocity += inputs.velocity;
+                avgAcceleration += inputs.acceleration;
+            }
+
+            avgPosition /= getMotorCount();
+            avgVelocity /= getMotorCount();
+            avgAcceleration /= getMotorCount();
+
+            setCurrentPosition(avgPosition);
+            setVelocity(avgVelocity);
+            setAcceleration(avgAcceleration);
+        }
     }
 
     /**
@@ -178,5 +196,48 @@ public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBa
         } else {
             return new SimpleMatrix(3, 1, true, 0.0, 0.0, 0.0);
         }
+    }
+
+    /**
+     * Override feedforward distribution for linear mechanisms Consider gear ratios and motor
+     * efficiency for better distribution
+     */
+    @Override
+    protected List<Double> distributeFeedforwardAmongMotors(SimpleMatrix totalFeedforward) {
+        List<Double> motorFeedforwards = new ArrayList<>();
+
+        if (getMotorCount() == 0) {
+            return motorFeedforwards;
+        }
+
+        // Calculate total feedforward magnitude
+        double totalMagnitude = 0.0;
+        if (totalFeedforward != null && totalFeedforward.getNumRows() > 0) {
+            totalMagnitude = Math.sqrt(totalFeedforward.get(0, 0) * totalFeedforward.get(0, 0)
+                    + totalFeedforward.get(1, 0) * totalFeedforward.get(1, 0)
+                    + totalFeedforward.get(2, 0) * totalFeedforward.get(2, 0));
+        }
+
+        // Calculate total gear ratio and efficiency
+        double totalGearRatio = 0.0;
+        double totalEfficiency = 0.0;
+
+        for (MotorConfig config : motorConfigs) {
+            totalGearRatio += config.gearRatio;
+            totalEfficiency += 0.85; // Assume 85% efficiency per motor
+        }
+
+        // Distribute based on gear ratio and efficiency
+        for (int i = 0; i < getMotorCount(); i++) {
+            MotorConfig config = motorConfigs.get(i);
+            double motorRatio = config.gearRatio / totalGearRatio;
+            double motorEfficiency = 0.85; // Individual motor efficiency
+
+            // Feedforward = total force * motor ratio / motor efficiency
+            double motorFeedforward = totalMagnitude * motorRatio / motorEfficiency;
+            motorFeedforwards.add(motorFeedforward);
+        }
+
+        return motorFeedforwards;
     }
 }
