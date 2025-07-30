@@ -1,8 +1,8 @@
 package frc.lib.structure.motors;
 
-import frc.lib.structure.RequestIO;
+import frc.lib.structure.requestBase;
 
-public class MotorRequest implements RequestIO{
+public class MotorRequest extends requestBase{
     
     public double position;
     public double velocity;
