@@ -2,7 +2,9 @@ package frc.lib.structure.mechanisms;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.ejml.simple.SimpleMatrix;
+
 import frc.lib.structure.configBase;
 import frc.lib.structure.inputBase;
 import frc.lib.structure.requestBase;
@@ -11,7 +13,8 @@ import frc.lib.structure.motors.MotorInputs;
 import frc.lib.structure.physics.physicalProperties;
 
 /**
- * Linear mechanism class for describing linear motion structures like elevators Extends Mechanism,
+ * Linear mechanism class for describing linear motion structures like elevators
+ * Extends Mechanism,
  * specialized for linear motion
  */
 public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBase, Trequest extends requestBase>
@@ -148,7 +151,8 @@ public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBa
     }
 
     /**
-     * Calculate feedforward force for linear mechanism Includes gravity, inertia, friction, etc.
+     * Calculate feedforward force for linear mechanism Includes gravity, inertia,
+     * friction, etc.
      */
     @Override
     public SimpleMatrix getFeedforward(SimpleMatrix noninertialFrame) {
@@ -185,7 +189,8 @@ public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBa
      * Calculate friction (simplified model)
      */
     private SimpleMatrix calculateFriction() {
-        // Simplified friction model: opposite to velocity direction, proportional to velocity
+        // Simplified friction model: opposite to velocity direction, proportional to
+        // velocity
         double frictionCoefficient = 0.1; // Friction coefficient
         double frictionMagnitude = frictionCoefficient * Math.abs(velocity);
 
@@ -199,7 +204,8 @@ public class LinearMechanism<Tconfig extends configBase, Tinputs extends inputBa
     }
 
     /**
-     * Override feedforward distribution for linear mechanisms Consider gear ratios and motor
+     * Override feedforward distribution for linear mechanisms Consider gear ratios
+     * and motor
      * efficiency for better distribution
      */
     @Override

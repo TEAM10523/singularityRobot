@@ -2,7 +2,9 @@ package frc.lib.structure.mechanisms;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.ejml.simple.SimpleMatrix;
+
 import frc.lib.structure.configBase;
 import frc.lib.structure.inputBase;
 import frc.lib.structure.requestBase;
@@ -11,7 +13,8 @@ import frc.lib.structure.motors.MotorInputs;
 import frc.lib.structure.physics.physicalProperties;
 
 /**
- * Rotating mechanism class for describing rotating structures like arms Extends Mechanism,
+ * Rotating mechanism class for describing rotating structures like arms Extends
+ * Mechanism,
  * specialized for rotating motion
  */
 public class RotatingMechanism<Tconfig extends configBase, Tinputs extends inputBase, Trequest extends requestBase>
@@ -138,7 +141,8 @@ public class RotatingMechanism<Tconfig extends configBase, Tinputs extends input
     }
 
     /**
-     * Calculate feedforward torque for rotating mechanism Includes gravity torque, inertia torque,
+     * Calculate feedforward torque for rotating mechanism Includes gravity torque,
+     * inertia torque,
      * etc.
      */
     @Override
@@ -164,8 +168,7 @@ public class RotatingMechanism<Tconfig extends configBase, Tinputs extends input
         SimpleMatrix cg = getPhysicalProperties().CG;
 
         // Calculate gravity vector (assume gravity direction is -z)
-        SimpleMatrix gravity =
-                new SimpleMatrix(3, 1, true, 0.0, 0.0, -9.81 * getPhysicalProperties().mass);
+        SimpleMatrix gravity = new SimpleMatrix(3, 1, true, 0.0, 0.0, -9.81 * getPhysicalProperties().mass);
 
         // Calculate gravity torque = r × F
         SimpleMatrix r = cg.minus(pivotPoint);
@@ -210,7 +213,8 @@ public class RotatingMechanism<Tconfig extends configBase, Tinputs extends input
     }
 
     /**
-     * Override feedforward distribution for rotating mechanisms Consider gear ratios and motor
+     * Override feedforward distribution for rotating mechanisms Consider gear
+     * ratios and motor
      * efficiency for better distribution
      */
     @Override
