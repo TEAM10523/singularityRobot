@@ -8,7 +8,7 @@ public class MotorConfig implements ConfigIO {
     public int ID;
     public String canbus;
     public double updateFrequency;
-    
+
     // PIDs and FFs
     public double kP = 0;
     public double kI = 0;
@@ -29,17 +29,17 @@ public class MotorConfig implements ConfigIO {
     public boolean reversed = false;
     public boolean isBreak = false;
     public boolean continuous = false;
-    public boolean isInnerSyncronized=true;
+    public boolean isInnerSyncronized = true;
 
     public double stallTorque = 0;
     public double freeVel = 0;
-    
+
     // supply current
     public boolean supplyCurrentLimitEnabled = false;
-    public double supplyCurrentLimit = 0;
+    public double supplyCurrentLimit = 100;
     public double supplyCurrentLowerLimit = 0;
     public double supplyCurrentLimitLowerTime = 0;
-    
+
     // stator current
     public boolean enabledFOC = false;
 

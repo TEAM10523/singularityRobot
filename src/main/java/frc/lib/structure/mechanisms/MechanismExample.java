@@ -99,12 +99,33 @@ public class MechanismExample extends SubsystemBase {
         armConfig.updateFrequency = 100; // Hz
         armConfig.isInnerSyncronized = true;
 
-        // Create motors
+        // Create motors for elevator (dual motor setup)
         elevatorMotor = new KrakenIO(elevatorConfig);
+
+        MotorConfig elevatorConfig2 = new MotorConfig("Elevator2", 3, "rio");
+        elevatorConfig2.kP = 0.1;
+        elevatorConfig2.kI = 0.0;
+        elevatorConfig2.kD = 0.01;
+        elevatorConfig2.maxVel = 5.0;
+        elevatorConfig2.maxAcc = 10.0;
+        elevatorConfig2.gearRatio = 10.0;
+        elevatorConfig2.reversed = false;
+        elevatorConfig2.isBreak = true;
+        elevatorConfig2.supplyCurrentLimitEnabled = true;
+        elevatorConfig2.supplyCurrentLimit = 40.0;
+        elevatorConfig2.statorCurrentLimitEnabled = true;
+        elevatorConfig2.statorCurrentLimit = 40.0;
+        elevatorConfig2.updateFrequency = 100;
+        elevatorConfig2.isInnerSyncronized = true;
+
+        KrakenIO elevatorMotor2 = new KrakenIO(elevatorConfig2);
+
+        // Create motors for arm (single motor setup)
         armMotor = new KrakenIO(armConfig);
 
         // Register motors with mechanisms
         elevator.registerMotor(elevatorMotor, elevatorConfig);
+        elevator.registerMotor(elevatorMotor2, elevatorConfig2);
         arm.registerMotor(armMotor, armConfig);
 
         // Add mechanisms to system
