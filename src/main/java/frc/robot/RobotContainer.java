@@ -15,6 +15,7 @@ import frc.robot.commands.RotatingMechanismTestCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.MotorTestSubsystem;
 import frc.robot.subsystems.RotatingMechanismTestSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -30,6 +31,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final MotorTestSubsystem m_motorTestSubsystem = new MotorTestSubsystem();
   private final RotatingMechanismTestSubsystem m_rotatingMechanismTestSubsystem = new RotatingMechanismTestSubsystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
